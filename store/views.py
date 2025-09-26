@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect
 from django.conf import settings
 
-from store.models import Category,Product,Tax,Color,Size,Gallery,Specification,ProductFaq,Review,Wishlist,Cart,CartOrder,CartOrderItem,Coupon,Notification
+from store.models import Category,Product,Tax,Review,Cart,CartOrder,CartOrderItem,Coupon,Notification
 from userauths.models import User
 from store.serializers import ProductSerializer,CategorySerializer,CartSerializer,CartOrderSerializer,CouponSerializer,NotificationSerializer,ReviewSerializer
 

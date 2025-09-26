@@ -12,7 +12,7 @@ class Vendor(models.Model):
     mobile=models.CharField(max_length=100, help_text="Shop Mobile Number", null=True, blank=True)
     active=models.BooleanField(default=False)
     date=models.DateTimeField(auto_now_add=True)
-    slug=models.SlugField(unique=True, max_length=500)
+    slug=models.SlugField(null=True,blank=True)
     
     class Meta:
         verbose_name_plural = 'Vendors'

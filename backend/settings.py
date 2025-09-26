@@ -205,25 +205,25 @@ STORAGES = {
 
 SIMPLE_JWT = {
     # Token lifetime
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),   # Access token কতক্ষণ থাকবে
-    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),     # Refresh token কতক্ষণ থাকবে
-    "ROTATE_REFRESH_TOKENS": False,                  # Refresh token use করলে নতুন refresh token দিবে কিনা
-    "BLACKLIST_AFTER_ROTATION": True,                # পুরানো refresh token blacklist হবে কিনা
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),   
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),     
+    "ROTATE_REFRESH_TOKENS": False,                 
+    "BLACKLIST_AFTER_ROTATION": True,                
 
     # Token settings
-    "UPDATE_LAST_LOGIN": False,                      # Login করলে user.last_login আপডেট করবে কিনা
-    "ALGORITHM": "HS256",                            # কোন algorithm ব্যবহার হবে
-    "VERIFYING_KEY": None,                           # Public key (যদি asymmetric algorithm হয়)
+    "UPDATE_LAST_LOGIN": False,                     
+    "ALGORITHM": "HS256",                            
+    "VERIFYING_KEY": None,                          
     "AUDIENCE": None,
     "ISSUER": None,
     "JWK_URL": None,
     "LEEWAY": 0,
 
     # Auth Header
-    "AUTH_HEADER_TYPES": ("Bearer",),                # Authorization: Bearer <token>
-    "AUTH_HEADER_NAME": "HTTP_AUTHORIZATION",        # কোন header ব্যবহার হবে
-    "USER_ID_FIELD": "id",                           # user কে identify করার জন্য কোন field
-    "USER_ID_CLAIM": "user_id",                      # JWT এর claim নাম
+    "AUTH_HEADER_TYPES": ("Bearer",),                
+    "AUTH_HEADER_NAME": "HTTP_AUTHORIZATION",        
+    "USER_ID_FIELD": "id",                           
+    "USER_ID_CLAIM": "user_id",                     
     "USER_AUTHENTICATION_RULE": "rest_framework_simplejwt.authentication.default_user_authentication_rule",
 
     # Token classes
