@@ -1,20 +1,17 @@
 from django.shortcuts import render,redirect
-from django.conf import settings
 from django.db import models,transaction
 
-from store.models import Category,Product,Tax,Color,Size,Gallery,Specification,ProductFaq,Review,Wishlist,Cart,CartOrder,CartOrderItem,Coupon,Notification
-from userauths.models import User,Profile
-from vendor.models import Vendor
-from store.serializers import ProductSerializer,CategorySerializer,CartSerializer,CartOrderSerializer,CouponSerializer,NotificationSerializer,ReviewSerializer,WishlistSerializer,SummarySerializer,CartOrderItemSerializer,EarningSerializer,CouponSummarySerializer,NotificationSummarySerializer,VendorSerializer,SpecificationSerializer,ColorSerializer,SizeSerializer,GallerySerializer
+from store.models import Product,Review,CartOrder,CartOrderItem,Coupon,Notification
+from userauths.models import Profile
+from vendor.models import Vendor,VendorRequest
+from store.serializers import ProductSerializer,CartOrderSerializer,CouponSerializer,NotificationSerializer,ReviewSerializer,WishlistSerializer,SummarySerializer,CartOrderItemSerializer,EarningSerializer,CouponSummarySerializer,NotificationSummarySerializer,VendorSerializer,SpecificationSerializer,ColorSerializer,SizeSerializer,GallerySerializer
 from userauths.serializer import ProfileSerializer
 
 from rest_framework import generics, status
-from rest_framework.permissions import IsAuthenticated, AllowAny
-from decimal import Decimal
+from rest_framework.permissions import IsAuthenticated, AllowAny,IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
 
-from django.core.mail import EmailMultiAlternatives
-from django.template.loader import render_to_string
+from vendor.serializers import VendorRequestSerializer
 
 
 import stripe 
@@ -437,5 +434,63 @@ class ProductDeleteAPIView(generics.DestroyAPIView):
         
         return product    
     
-    
-    
+
+
+
+# 🟢 1. Vendor Request Create
+class VendorRequestCreateView(generics.CreateAPIView):
+    queryset = VendorRequest.objects.all()
+    serializer_class = VendorRequestSerializer
+    permission_classes = [IsAuthenticated]
+
+    def create(self, request, *args, **kwargs):
+        user = request.user
+
+        if VendorRequest.objects.filter(user=user).exists():
+            return Response(
+                {"error": "You have already submitted a vendor request."},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save(user=user)
+        return Response(
+            {"message": "Vendor request submitted successfully."},
+            status=status.HTTP_201_CREATED
+        )
+
+
+# 🟢 2. Get current user's vendor request
+class MyVendorRequestView(generics.RetrieveAPIView):
+    serializer_class = VendorRequestSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_object(self):
+        return VendorRequest.objects.get(user=self.request.user)
+
+
+# 🟣 3. Admin – List all vendor requests
+class VendorRequestListView(generics.ListAPIView):
+    serializer_class = VendorRequestSerializer
+    queryset = VendorRequest.objects.all()
+    permission_classes = [IsAdminUser]
+
+
+# 🔵 4. Admin – Approve vendor request
+class ApproveVendorRequestView(generics.UpdateAPIView):
+    serializer_class = VendorRequestSerializer
+    queryset = VendorRequest.objects.all()
+    permission_classes = [IsAdminUser]
+
+    def patch(self, request, *args, **kwargs):
+        vendor_request = self.get_object()
+
+        if vendor_request.is_approved:
+            return Response({"message": "This request is already approved."})
+
+        vendor_request.is_approved = True
+        vendor_request.save()
+
+        # Signal trigger → Vendor created automatically
+        return Response({"message": "Vendor request approved, vendor account created."})

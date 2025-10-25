@@ -34,7 +34,7 @@ class Product(models.Model):
         
     )
     
-    title=models.CharField(max_length=100)
+    title=models.CharField(max_length=500)
     image=models.FileField(upload_to="products",null=True,blank=True,default="product.jpg")
     description=models.TextField(null=True,blank=True)
     category=models.ForeignKey(Category, on_delete=models.SET_NULL,null=True,blank=True)

@@ -103,7 +103,7 @@ class CartAPIView(generics.ListCreateAPIView):
             cart.tax_fee=int(quantity)*Decimal(tax_rate)
             cart.country=country
             cart.size=size
-            cart.color=color
+            cart.color=color   
             cart.cart_id=cart_id
             
             service_fee_percentage=20/100
@@ -468,7 +468,7 @@ class ReviewListAPIView(generics.ListCreateAPIView):
         
         return Response({"message":"Review created successfully"}, status=status.HTTP_200_OK)
 
-class SearchProductAPIView(generics.ListCreateAPIView):
+class  SearchProductAPIView(generics.ListCreateAPIView):
     serializer_class = ProductSerializer
     permission_classes= [AllowAny]
 

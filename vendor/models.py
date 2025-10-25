@@ -1,4 +1,6 @@
 from django.db import models
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 # Create your models here.
 from userauths.models import User
@@ -25,3 +27,25 @@ class Vendor(models.Model):
         if self.slug =="" or self.slug is None:
             self.slug=slugify(self.name)
         super(Vendor, self).save(*args, **kwargs)
+
+class VendorRequest(models.Model):
+    user=models.OneToOneField(User, on_delete=models.CASCADE)
+    message = models.TextField(null=True, blank=True)
+    is_approved = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.user.email} - Vendor Request"
+    
+
+
+@receiver(post_save, sender=VendorRequest)
+def create_vendor_when_approved(sender, instance, **kwargs):
+    if instance.is_approved:
+        if not Vendor.objects.filter(user=instance.user).exists():
+            Vendor.objects.create(
+                user=instance.user,
+                name=f"{instance.user.full_name or instance.user.username}'s Shop",
+                active=True
+            )
+           

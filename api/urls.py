@@ -70,5 +70,10 @@ urlpatterns =[
     path('vendor-update-product/<vendor_id>/<product_pid>/', vendor_views.ProducUpdateView.as_view()),
     path('vendor-delete-product/', vendor_views.ProductDeleteAPIView.as_view()),
     
+    path('vendor/request/',vendor_views.VendorRequestCreateView.as_view(), name='vendor-request-create'),
+    path('vendor/request/me/', vendor_views.MyVendorRequestView.as_view(), name='vendor-request-me'),
+    path('vendor/requests/', vendor_views.VendorRequestListView.as_view(), name='vendor-request-list'),
+    path('vendor/request/<int:pk>/approve/', vendor_views.ApproveVendorRequestView.as_view(), name='vendor-request-approve'),
+    
        
 ]
