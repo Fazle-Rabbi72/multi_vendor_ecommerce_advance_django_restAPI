@@ -65,7 +65,7 @@ class PasswordRestEmailVerify(generics.RetrieveAPIView):
 class PasswordChangeView(generics.CreateAPIView):
     permission_classes=(AllowAny,)
     serializer_class=UserSerializer
-    
+    throttle_scope = 'password_change'
     def create(self, request, *args, **kwargs):
         payload = request.data
         otp=payload['otp']
