@@ -94,6 +94,15 @@ TEMPLATES = [
     },
 ]
 
+REST_FRAMEWORK = {
+    'DEFAULT_THROTTLE_CLASSES': [
+        'rest_framework.throttling.ScopedRateThrottle',
+    ],
+    'DEFAULT_THROTTLE_RATES': {
+        'password_reset': '3/1min',
+        'password_change': '2/1min',
+    }
+}
 
 
 WSGI_APPLICATION = 'backend.wsgi.app'

@@ -1,6 +1,10 @@
 from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework import status
+
+from django.core.mail import send_mail
+from django.conf import settings
+
 # Create your views here.
 from userauths.models import User,Profile
 from rest_framework_simplejwt.views import TokenObtainPairView
@@ -29,20 +33,33 @@ def generate_otp():
     return unique_key
     
 class PasswordRestEmailVerify(generics.RetrieveAPIView):
-    permission_classes=(AllowAny,)
-    serializer_class=UserSerializer
-    
+    permission_classes = (AllowAny,)
+    serializer_class = UserSerializer
+    throttle_scope = 'password_reset'
+
     def get_object(self):
-        email=self.kwargs['email']
-        user=User.objects.get(email=email)
-        
+        email = self.kwargs['email']
+        user = User.objects.get(email=email)
+
         if user:
-            user.otp=generate_otp()
+            user.otp = generate_otp()
             user.save()
-            uidb64=user.pk
-            otp=user.otp
-            Link=f"http://localhost:5173/create-new-password?otp={otp}&uidb64={uidb64}"
-            print("Link ======",Link)
+
+            uidb64 = user.pk
+            otp = user.otp
+
+            Link = f"http://localhost:5173/create-new-password?otp={otp}&uidb64={uidb64}"
+            
+
+           
+            subject = "Password Reset Link"
+            message = f"Your OTP is: {otp}\n\nClick the link to reset your password:\n{Link}"
+            email_from = settings.EMAIL_HOST_USER
+            recipient = [email]
+
+            send_mail(subject, message, email_from, recipient)
+            
+
         return user
 
 class PasswordChangeView(generics.CreateAPIView):
