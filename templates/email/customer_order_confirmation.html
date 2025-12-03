@@ -1,2 +1,105 @@
-{{order}}
-{{order_items}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Order Confirmation</title>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f7f7f7;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            background: #ffffff;
+            width: 600px;
+            margin: auto;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        .header {
+            background: #4CAF50;
+            padding: 15px;
+            text-align: center;
+            color: white;
+            border-radius: 6px 6px 0 0;
+        }
+        .order-id {
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        table th, table td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        table th {
+            background: #f5f5f5;
+        }
+        .total {
+            text-align: right;
+            font-size: 18px;
+            font-weight: bold;
+            padding-top: 10px;
+        }
+        .footer {
+            margin-top: 20px;
+            font-size: 14px;
+            text-align: center;
+            color: #777;
+        }
+        .btn {
+            background: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            display: inline-block;
+            border-radius: 5px;
+            text-decoration: none;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h2>Order Confirmation</h2>
+        <div class="order-id">Order ID: {{ order.oid }}</div>
+    </div>
+
+    <p>Hi {{ order.full_name }},</p>
+    <p>Thank you for your order! We have received your payment successfully.</p>
+
+    <h3>Order Details:</h3>
+    <table>
+        <tr>
+            <th>Product</th>
+            <th>Vendor</th>
+            <th>Qty</th>
+            <th>Price</th>
+        </tr>
+        {% for item in order_items %}
+        <tr>
+            <td>{{ item.product.title }}</td>
+            <td>{{ item.vendor.name }}</td>
+            <td>{{ item.quantity }}</td>
+            <td>{{ item.price }} tk</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <p class="total">Total: {{ order.total }} tk</p>
+
+    <div class="footer">
+        <p>Thank you for shopping with us!</p>
+        <p>Your Company Name</p>
+    </div>
+</div>
+
+</body>
+</html>

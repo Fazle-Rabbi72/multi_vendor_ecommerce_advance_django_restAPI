@@ -437,7 +437,7 @@ class ProductDeleteAPIView(generics.DestroyAPIView):
 
 
 
-# 🟢 1. Vendor Request Create
+#  1. Vendor Request Create
 class VendorRequestCreateView(generics.CreateAPIView):
     queryset = VendorRequest.objects.all()
     serializer_class = VendorRequestSerializer
@@ -461,7 +461,7 @@ class VendorRequestCreateView(generics.CreateAPIView):
         )
 
 
-# 🟢 2. Get current user's vendor request
+#  2. Get current user's vendor request
 class MyVendorRequestView(generics.RetrieveAPIView):
     serializer_class = VendorRequestSerializer
     permission_classes = [IsAuthenticated]
@@ -470,7 +470,7 @@ class MyVendorRequestView(generics.RetrieveAPIView):
         return VendorRequest.objects.get(user=self.request.user)
 
 
-# 🟣 3. Admin – List all vendor requests
+#  3. Admin – List all vendor requests
 class VendorRequestListView(generics.ListAPIView):
     serializer_class = VendorRequestSerializer
     queryset = VendorRequest.objects.all()

@@ -1,9 +1,9 @@
 from django.shortcuts import render,redirect
 from django.conf import settings
 
-from store.models import Category,Product,Tax,Color,Size,Gallery,Specification,ProductFaq,Review,Wishlist,Cart,CartOrder,CartOrderItem,Coupon,Notification
+from store.models import Product,Wishlist,Cart,CartOrder,Notification
 from userauths.models import User
-from store.serializers import ProductSerializer,CategorySerializer,CartSerializer,CartOrderSerializer,CouponSerializer,NotificationSerializer,ReviewSerializer,WishlistSerializer
+from store.serializers import CartOrderSerializer,CouponSerializer,NotificationSerializer,ReviewSerializer,WishlistSerializer
 
 from rest_framework import generics, status
 from rest_framework.permissions import IsAuthenticated, AllowAny

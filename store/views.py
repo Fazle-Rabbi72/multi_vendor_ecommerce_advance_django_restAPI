@@ -381,8 +381,7 @@ class StripeCheckoutView(generics.CreateAPIView):
 
 
 class PaymentSuccessView(generics.CreateAPIView):
-    serializer_class=CartOrderSerializer
-    permission_classes=[AllowAny]       
+    serializer_class=CartOrderSerializer      
     queryset=CartOrder.objects.all()
     
     def create(self,request,*args,**kwargs):
@@ -393,6 +392,7 @@ class PaymentSuccessView(generics.CreateAPIView):
        
        order=CartOrder.objects.get(oid=order_oid)
        order_items=CartOrderItem.objects.filter(order=order)
+       print(order_items.count())
        if session_id != 'null':
            session = stripe.checkout.Session.retrieve(session_id)
            
