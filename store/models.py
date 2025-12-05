@@ -90,7 +90,7 @@ class Gallery(models.Model):
     product=models.ForeignKey(Product, on_delete=models.SET_NULL,null=True)
     image=models.FileField(upload_to="products",default="product.jpg",null=True,blank=True)
     active=models.BooleanField(default=True)
-    gid=ShortUUIDField(unique=True, length=10, max_length=10, alphabet="abcdefg12345")
+    gid=ShortUUIDField(length=10, max_length=25, alphabet="abcdefghijklmnopqrstuvxyz")
     
     def __str__(self):
         return self.product.title
