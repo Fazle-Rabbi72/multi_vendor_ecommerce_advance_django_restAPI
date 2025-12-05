@@ -99,9 +99,10 @@ REST_FRAMEWORK = {
         'rest_framework.throttling.ScopedRateThrottle',
     ],
     'DEFAULT_THROTTLE_RATES': {
-        'password_reset': '3/1min',
-        'password_change': '2/1min',
-    }
+    'password_reset': '10/min',     
+    'password_change': '10/min',
+}
+
 }
 
 
