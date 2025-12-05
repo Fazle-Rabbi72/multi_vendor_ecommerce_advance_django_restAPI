@@ -49,7 +49,7 @@ class Product(models.Model):
     rating=models.PositiveIntegerField(default=0,null=True,blank=True)
     vendor=models.ForeignKey(Vendor, on_delete=models.CASCADE)
     pid=ShortUUIDField(unique=True, length=10, max_length=10, alphabet="abcdefg12345")
-    slug=models.SlugField(null=True,blank=True)
+    slug=models.SlugField(max_length=500,null=True,blank=True)
     date=models.DateTimeField(auto_now_add=True)
     
     
