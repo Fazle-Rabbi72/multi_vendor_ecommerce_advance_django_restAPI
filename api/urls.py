@@ -49,7 +49,6 @@ urlpatterns =[
     path('vendor-product-chart/<vendor_id>/', vendor_views.MonthlyProductChartAPIView),
     path('vendor/orders/<vendor_id>/', vendor_views.ProductAPIView.as_view()),
     path('vendor/orders/<vendor_id>/<order_oid>/', vendor_views.OrderAPIView.as_view()),
-    path('vendor/revenue/<vendor_id>/', vendor_views.OrderDetailAPIView.as_view()),
     path('vendor-product/<vendor_id>/', vendor_views.FilterProductAPIView.as_view()),
     path('vendor-earning/<vendor_id>/', vendor_views.EarningAPIView.as_view()),
     path('vendor-monthly-earning/<vendor_id>/', vendor_views.MonthlyEarningTracker),

@@ -90,15 +90,7 @@ class OrderDetailAPIView(generics.RetrieveAPIView):
         
         return CartOrder.objects.get(vendor=vendor, oid= order_oid)
     
-class RevenueAPIView(generics.ListAPIView):
-    serializer_class= CartOrderItemSerializer
-    permission_classes= [AllowAny]
-    
-    def get_queryset(self):
-        vendor_id=self.kwargs['vendor_id']
-        vendor=Vendor.objects.get(id= vendor_id)
-        
-        return CartOrderItem.objects.filter(vendor=vendor, order__payment_status="paid").aggregate(total_revenue=models.Sum(models.F('sub_total')+models.F('shipping_amount')))['total_revenue'] or 0
+
 
 class FilterProductAPIView(generics.ListAPIView):
     serializer_class = ProductSerializer
