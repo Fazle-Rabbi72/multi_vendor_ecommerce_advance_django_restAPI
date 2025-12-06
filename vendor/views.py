@@ -152,7 +152,7 @@ def MonthlyEarningTracker(request, vendor_id):
         CartOrderItem.objects.filter(vendor=vendor,order__payment_status="paid")
         .annotate(month=ExtractMonth("date"))
         .values("month")
-        .annotate(sales_count=models.Sum("quantity"),total_earning=models.Sum(models.F('sum_total')+models.F('shipping_amount'))).order_by('-month')
+        .annotate(sales_count=models.Sum("quantity"),total_earning=models.Sum(models.F('sub_total')+models.F('shipping_amount'))).order_by('-month')
     )
     return Response(monthly_earning_tracker)
 
