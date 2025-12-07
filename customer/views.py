@@ -3,7 +3,7 @@ from django.conf import settings
 
 from store.models import Product,Wishlist,Cart,CartOrder,Notification
 from userauths.models import User
-from store.serializers import CartOrderSerializer,CouponSerializer,NotificationSerializer,ReviewSerializer,WishlistSerializer
+from store.serializers import CartOrderSerializer,ProductSerializer,NotificationSerializer,ReviewSerializer,WishlistSerializer
 
 from rest_framework import generics, status
 from rest_framework.permissions import IsAuthenticated, AllowAny
@@ -91,3 +91,14 @@ class MarkCustomerNotificationAsSeen(generics.RetrieveAPIView):
             noti.seen=True
             noti.save()
             return noti
+        
+class FilterProductByCategory(generics.ListAPIView):
+    serializer_class=ProductSerializer
+    permission_classes=[AllowAny]
+    
+    
+    def get_queryset(self):
+        category_id=self.kwargs['category_id']
+        return Product.objects.filter(category__id=category_id, status="published")
+        
+    

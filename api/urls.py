@@ -41,6 +41,7 @@ urlpatterns =[
     path('customer/wishlist/<user_id>/',customer_views.WishlistAPIView.as_view()),
     path('customer/notification/<user_id>/',customer_views.CustomerNotification.as_view()),
     path('customer/notification/<user_id>/<noti_id>',customer_views.MarkCustomerNotificationAsSeen.as_view()),
+    path('products/category/<int:category_id>/',customer_views.FilterProductByCategory.as_view()),
     
     
     # Vendor Dashboard Endpoints
