@@ -36,7 +36,7 @@ def generate_numeric_otp(length=7):
 class PasswordRestEmailVerify(generics.RetrieveAPIView):
     permission_classes = (AllowAny,)
     serializer_class = UserSerializer
-    # throttle_scope = 'password_reset'
+    throttle_scope = 'password_reset'
 
     def get_object(self):
         email = self.kwargs['email']
@@ -71,6 +71,7 @@ class PasswordRestEmailVerify(generics.RetrieveAPIView):
 class PasswordChangeView(generics.CreateAPIView):
     permission_classes = (AllowAny,)
     serializer_class = UserSerializer
+    throttle_scope='password_change'
     
     def create(self, request, *args, **kwargs):
         payload = request.data
