@@ -423,6 +423,10 @@ class PaymentSuccessView(generics.CreateAPIView):
                     msg.attach_alternative(html_body,'text/html')
                     msg.send()
                     #send email to vendor
+                    #cart empty functionality---
+                    if order.buyer:
+                        Cart.objects.filter(user=order.buyer).delete()  
+                         
                     return Response({'message':'Payment Successfull'},status=status.HTTP_200_OK)
                else:
                    return Response({'message':'Already Paid'},status=status.HTTP_200_OK)
