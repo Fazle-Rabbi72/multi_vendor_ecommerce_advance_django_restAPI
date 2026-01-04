@@ -54,7 +54,7 @@ class PasswordRestEmailVerify(generics.RetrieveAPIView):
             user.reset_token = reset_token
             user.save()
 
-            Link = f"http://localhost:3000/create-new-password?otp={user.otp}&uidb64={uidb64}&reset_token={reset_token}"
+            Link = f"https://multi-ecommerce-frontend.vercel.app/create-new-password?otp={user.otp}&uidb64={uidb64}&reset_token={reset_token}"
             
 
            

@@ -368,8 +368,8 @@ class StripeCheckoutView(generics.CreateAPIView):
                     },
                 ],
                 mode='payment',
-                success_url='http://localhost:3000/payment-success/'+order.oid +'?session_id={CHECKOUT_SESSION_ID}',
-                cancel_url='http://localhost:3000/payment-failed/?session_id={CHECKOUT_SESSION_ID}',
+                success_url='https://multi-ecommerce-frontend.vercel.app/payment-success/'+order.oid +'?session_id={CHECKOUT_SESSION_ID}',
+                cancel_url='https://multi-ecommerce-frontend.vercel.app/payment-failed/?session_id={CHECKOUT_SESSION_ID}',
             )
         
             order.stripe_session_id=checkout_session.id
